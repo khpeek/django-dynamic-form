@@ -1,0 +1,43 @@
+{# {% load static %} #}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+{# <script src={% static "dashboard/dashboard.js" %}></script> #}
+<script>
+	$(document).ready(function(){
+		var csrftoken = Cookies.get('csrftoken');
+
+		function csrfSafeMethod(method) {
+		    // these HTTP methods do not require CSRF protection
+		    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+		}
+		$.ajaxSetup({
+		    beforeSend: function(xhr, settings) {
+		        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+		            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+		        }
+		    }
+		});
+
+	    $(".auto-submit").change(function() {
+	        $.post({
+	        	url: "{% url 'checkin-create' %}",
+	        	data: {id: $(".auto-submit option:selected").val()}
+	        	// headers: {
+	        	// 	"X-CSRFToken": csrftoken
+	        	// }
+	        })
+	    });
+	});
+</script>
+
+
+<form action="" method="post">{% csrf_token %}
+    {% for field in form %}
+	    <div class="{% if field.name == 'checkin_type' %}auto-submit{% endif %}">
+		    {{ field.errors }}
+		    {{ field.label_tag }}
+		    {{ field }}
+		</div>
+	{% endfor %}
+    <input type="submit" value="Send message" />
+</form>

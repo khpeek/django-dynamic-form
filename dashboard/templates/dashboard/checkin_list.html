@@ -1,0 +1,8 @@
+<h1>Check-ins</h1>
+<ul>
+{% for checkin in object_list %}
+    <li>{{ checkin.requested_date|time }} - {{ checkin.title }}</li>
+{% empty %}
+    <li>No check-ins yet.</li>
+{% endfor %}
+</ul>

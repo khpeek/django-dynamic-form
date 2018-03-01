@@ -15,12 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from cars.views import CarCreate
 from dashboard.views import CheckInCreate, CheckInList, CheckInDetail, CheckInUpdate, get_checkin_type
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cars/create/', CarCreate.as_view()),
     path('checkins/new', CheckInCreate.as_view(), name='checkin-create'),
     path('checkins', CheckInList.as_view(), name='checkin-list'),
     path('checkins/<int:pk>', CheckInDetail.as_view(), name='checkin-detail'),

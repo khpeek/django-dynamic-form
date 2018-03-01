@@ -1,7 +1,7 @@
 {# {% load static %} #}
+{# <script src={% static "dashboard/dashboard.js" %}></script> #}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-{# <script src={% static "dashboard/dashboard.js" %}></script> #}
 <script>
 	$(document).ready(function(){
 		var csrftoken = Cookies.get('csrftoken');
@@ -22,9 +22,6 @@
 	        $.post({
 	        	url: "{% url 'checkin-create' %}",
 	        	data: {id: $(".auto-submit option:selected").val()}
-	        	// headers: {
-	        	// 	"X-CSRFToken": csrftoken
-	        	// }
 	        })
 	    });
 	});

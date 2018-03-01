@@ -28,6 +28,7 @@ class CheckInCreate(generic.CreateView):
 
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
+            logger.debug(f"Received AJAX POST request with the following request.POST data: {request.POST}")
             self.checkin_type = CheckInType.objects.get(pk=request.POST['id'])
         return super().post(request, *args, **kwargs)
 
@@ -46,7 +47,7 @@ class CheckInCreate(generic.CreateView):
         logger.debug("The form is invalid!")
         if hasattr(self, 'checkin_type'):
             form['title'].initial = self.checkin_type.title
-            logger.debug(f"The form's inital title is now {form['title'].initial}")
+            logger.debug(f"The form's initial title is now {form['title'].initial}")
         return super().form_invalid(form)
 
 
